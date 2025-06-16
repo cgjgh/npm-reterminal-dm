@@ -1,19 +1,19 @@
 {
-  "name": "npm-reterminal",
+  "name": "npm-reterminal-dm",
   "version": "1.1.0",
-  "description": "Access/ control reTerminal hardware such as accelerometer, light sensor, touch panel, buzzer, buttons, LEDs",
+  "description": "Access/ control reTerminal DM hardware such as accelerometer, light sensor, touch panel, buzzer, buttons, LEDs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lakshanthad/npm-reterminal.git"
+    "url": "git+https://github.com/cgjgh/npm-reterminal-dm.git"
   },
-  "author": "Lakshantha",
+  "author": "cgjgh",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lakshanthad/npm-reterminal/issues"
+    "url": "https://github.com/cgjgh/npm-reterminal-dm/issues"
   },
-  "homepage": "https://github.com/lakshanthad/npm-reterminal#readme"
+  "homepage": "https://github.com/cgjgh/npm-reterminal-dm#readme"
 }

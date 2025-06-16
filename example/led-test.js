@@ -5,23 +5,11 @@ function sleep(ms) {
   }
   
   async function delayedGreeting() {
-    console.log("staGreenOn");
-    led.staGreenOn();
+    console.log("usrRedOn");
+    led.usrRedOn();
     await sleep(1000);
-    console.log("staGreenOff");
-    led.staGreenOff();
-    await sleep(1000);
-    console.log("staRedOn");
-    led.staRedOn();
-    await sleep(1000);
-    console.log("staRedOff");
-    led.staRedOff();
-    await sleep(1000);
-    console.log("usrGreenOn");
-    led.usrGreenOn();
-    await sleep(1000);
-    console.log("usrGreenOff");
-    led.usrGreenOff();
+    console.log("usrRedOff");
+    led.usrRedOff();
     await sleep(1000);
   }
   
