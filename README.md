@@ -1,168 +1,184 @@
-# npm package for reTerminal
+# npm-reterminal-dm
 
-This npm package can be used to access and control [reTerminal](https://www.seeedstudio.com/ReTerminal-with-CM4-p-4904.html) hardware such as accelerometer, light sensor, touch panel, buzzer, buttons, LEDs
+A Node.js package for accessing and controlling [reTerminal DM](https://www.seeedstudio.com/ReTerminal-DM-p-5616.html) hardware components including touch panel, buzzer, LEDs, and light sensor.
 
 ## Installation
 
 ### From npm
 
 ```sh
-npm install npm-reterminal --save
+npm install npm-reterminal-dm --save
 ```
 
 ### From Source
 
 ```sh
-npm install https://github.com/lakshanthad/npm-reterminal
+npm install https://github.com/cgjgh/npm-reterminal-dm
 ```
+
+## Available Hardware Components
+
+- **Touch Panel**: Multi-touch capacitive touchscreen
+- **Buzzer**: Built-in buzzer for audio feedback
+- **LEDs**: User-controllable LED (red)
+- **Light Sensor**: Ambient light intensity sensor
 
 ## Usage
 
-### Accelerometer Test
+### Touch Panel
 
-````javascript
-const InputEvent = require('npm-reterminal');
-const dev = require('npm-reterminal/lib/deviceid');
-
-const accel = new InputEvent.Accel(dev.accelPath());
-
-accel.on('A1', function(buffer){
-    console.log('x-axis value=' + buffer)
-});
-
-accel.on('A2', function(buffer){
-    console.log('y-axis value=' + buffer)
-});
-
-accel.on('A3', function(buffer){
-    console.log('z-axis value=' + buffer)
-});
-````
-
-### Light Sensor Test
+Control and monitor the capacitive touch panel:
 
 ```javascript
-const light = require('npm-reterminal/lib/light');
-
-while (true) {
-    console.log("Light Intensity: " + light.lightSense());
-}
-```
-
-### Touch Panel Test
-
-```javascript
-const InputEvent = require('npm-reterminal');
-const dev = require('npm-reterminal/lib/deviceid');
+const InputEvent = require('npm-reterminal-dm');
+const dev = require('npm-reterminal-dm/lib/deviceid');
 
 const touch = new InputEvent.Touch(dev.tpPath());
 
-touch.on('x-axis', function(buffer){
-    console.log('x-axis coordinate=' + buffer)
+// Listen for touch coordinates
+touch.on('x-axis', function(coordinate) {
+    console.log('X-axis coordinate: ' + coordinate);
 });
 
-touch.on('y-axis', function(buffer){
-    console.log('y-axis coordinate=' + buffer)
-});
-```
-
-### Buttons Test
-
-```javascript
-const InputEvent = require('npm-reterminal');
-const dev = require('npm-reterminal/lib/deviceid');
-
-const button = new InputEvent.Button(dev.buttonsPath());
-
-button.on('F1ON' , function(){
-    console.log('F1 Pressed');
-});
-
-button.on('F1OFF' , function(){
-    console.log('F1 Released');
-});
-
-button.on('F2ON' , function(){
-    console.log('F2 Pressed');
-});
-
-button.on('F2OFF' , function(){
-    console.log('F2 Released');
-});
-
-button.on('F3ON' , function(){
-    console.log('F3 Pressed');
-});
-
-button.on('F3OFF' , function(){
-    console.log('F3 Released');
-});
-
-button.on('OON' , function(){
-    console.log('O Pressed');
-});
-
-button.on('OOFF' , function(){
-    console.log('O Released');
+touch.on('y-axis', function(coordinate) {
+    console.log('Y-axis coordinate: ' + coordinate);
 });
 ```
 
-### Buzzer Test
+### Buzzer Control
+
+Control the built-in buzzer:
 
 ```javascript
-const buzz = require('npm-reterminal/lib/buzzer');
+const buzz = require('npm-reterminal-dm/lib/buzzer');
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
-  
-  async function delayedGreeting() {
-    console.log("buzzer is ON");
+}
+
+async function buzzerDemo() {
+    console.log("Buzzer ON");
     buzz.buzzerOn();
     await sleep(1000);
-    console.log("buzzer is OFF");
+    
+    console.log("Buzzer OFF");
     buzz.buzzerOff();
     await sleep(1000);
-    console.log("buzzer is ON");
-    buzz.buzzerOn();
-    await sleep(1000);
-    console.log("buzzer is OFF");
-    buzz.buzzerOff();
-    await sleep(1000);
-  }
-  
-  delayedGreeting();
+}
+
+buzzerDemo();
 ```
 
-### LEDs Test
+#### Buzzer Functions
+- `buzzerOn()` - Turn buzzer on
+- `buzzerOff()` - Turn buzzer off
+
+### LED Control
+
+Control the user LED:
 
 ```javascript
-const led = require('npm-reterminal/lib/led');
+const led = require('npm-reterminal-dm/lib/led');
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
-  
-  async function delayedGreeting() {
-    console.log("staGreenOn");
-    led.staGreenOn();
+}
+
+async function ledDemo() {
+    console.log("User LED ON");
+    led.usrRedOn();
     await sleep(1000);
-    console.log("staGreenOff");
-    led.staGreenOff();
+    
+    console.log("User LED OFF");
+    led.usrRedOff();
     await sleep(1000);
-    console.log("staRedOn");
-    led.staRedOn();
-    await sleep(1000);
-    console.log("staRedOff");
-    led.staRedOff();
-    await sleep(1000);
-    console.log("usrGreenOn");
-    led.usrGreenOn();
-    await sleep(1000);
-    console.log("usrGreenOff");
-    led.usrGreenOff();
-    await sleep(1000);
-  }
-  
-  delayedGreeting();
+}
+
+ledDemo();
 ```
+
+#### LED Functions
+- `usrRedOn()` - Turn user red LED on
+- `usrRedOff()` - Turn user red LED off
+
+### Light Sensor
+
+Read ambient light intensity:
+
+```javascript
+const light = require('npm-reterminal-dm/lib/light');
+
+// Single reading
+console.log("Light Intensity: " + light.lightSense());
+
+// Continuous monitoring
+setInterval(() => {
+    console.log("Light Intensity: " + light.lightSense());
+}, 1000);
+```
+
+#### Light Sensor Functions
+- `lightSense()` - Returns current light intensity value
+
+## Device Detection
+
+The package automatically detects hardware components through the device ID system:
+
+```javascript
+const dev = require('npm-reterminal-dm/lib/deviceid');
+
+// Get device paths
+console.log("Touch panel path:", dev.tpPath());
+console.log("Buttons path:", dev.buttonsPath());
+console.log("Accelerometer path:", dev.accelPath());
+```
+
+## Hardware Requirements
+
+- reTerminal DM device
+- Linux-based operating system
+- Root/sudo access for hardware control
+- Node.js environment
+
+## System Paths
+
+The package interacts with the following system paths:
+- Touch Panel: `/dev/input/eventX` (where X is auto-detected)
+- Buzzer: `/sys/class/leds/usr-buzzer/brightness`
+- User LED: `/sys/class/leds/usr-led/brightness`
+- Light Sensor: `/sys/bus/iio/devices/iio:device0/in_illuminance_input`
+
+## Error Handling
+
+The package includes built-in error handling for:
+- Device disconnection events
+- File system access errors
+- Hardware communication failures
+
+```javascript
+const touch = new InputEvent.Touch(dev.tpPath());
+
+touch.on('error', function(err) {
+    console.error('Touch panel error:', err);
+});
+
+touch.on('disconnect', function() {
+    console.log('Touch panel disconnected');
+});
+```
+
+## Permissions
+
+Some functions require sudo privileges. Ensure your Node.js process has appropriate permissions to access hardware devices and system files.
+
+## License
+
+MIT
+
+## Repository
+
+[https://github.com/cgjgh/npm-reterminal-dm](https://github.com/cgjgh/npm-reterminal-dm)
+
+## Issues
+
+Report issues at: [https://github.com/cgjgh/npm-reterminal-dm/issues](https://github.com/cgjgh/npm-reterminal-dm/issues)
